@@ -1,0 +1,22 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: zssn
+      MYSQL_USER: zssn_user
+      MYSQL_PASSWORD: zssn_password
+    ports:
+      - "3306:3306"
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/zssn
+      SPRING_DATASOURCE_USERNAME: zssn_user
+      SPRING_DATASOURCE_PASSWORD: zssn_password
